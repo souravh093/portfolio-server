@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model About {
+  id               String   @id @default(uuid())
+  title            String
+  description      String   @db.Text
+  projectCompleted Int
+  yearExperience   Int
+  clientServe      Int
+  signature        String   @db.Text
+  resumeUrl        String   @db.Text
+  cvUrl            String   @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Education {
+  id              String   @id @default(uuid())
+  institutionName String
+  degree          String
+  startDate       DateTime
+  endDate         DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(uuid())
+  companyName String
+  position    String
+  startDate   DateTime
+  endDate     DateTime
+}
+
+model Service {
+  id             String           @id @default(uuid())
+  name           String           @unique
+  logo           String           @db.Text
+  description    String           @db.Text
+  videoUrl       String           @db.Text
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  serviceGallery ServiceGallery[]
+}
+
+model ServiceGallery {
+  id        String   @id @default(uuid())
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  image     String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TechnologyCategory {
+  id         String       @id @default(uuid())
+  name       String       @unique
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Technology Technology[]
+}
+
+model Technology {
+  id                    String                  @id @default(uuid())
+  name                  String                  @unique
+  logo                  String                  @db.Text
+  technologyCategory    TechnologyCategory      @relation(fields: [technologyCategoryId], references: [id])
+  technologyCategoryId  String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  projectUsedTechnology ProjectUsedTechnology[]
+}
+
+enum ProjectCategory {
+  FRONTEND
+  BACKEND
+  FULLSTACK
+  MOBILE
+  DESKTOP
+  OTHER
+}
+
+model Project {
+  id                    String                  @id @default(uuid())
+  name                  String
+  description           String                  @db.Text
+  videoUrl              String                  @db.Text
+  projectCategory       ProjectCategory         @default(OTHER)
+  client                String
+  duration              String
+  country               String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  projectGallery        ProjectGallery[]
+  projectUsedTechnology ProjectUsedTechnology[]
+  projectReview         ProjectReview[]
+}
+
+model ProjectGallery {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  image     String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProjectUsedTechnology {
+  id           String     @id @default(uuid())
+  projectId    String
+  technologyId String
+  project      Project    @relation(fields: [projectId], references: [id])
+  technology   Technology @relation(fields: [technologyId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model ProjectReview {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  name      String
+  email     String
+  image     String   @db.Text
+  review    String   @db.Text
+  rating    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogCategory {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  blog      Blog[]
+}
+
+model Blog {
+  id             String       @id @default(uuid())
+  title          String
+  description    String       @db.Text
+  image          String       @db.Text
+  blogCategory   BlogCategory @relation(fields: [blogCategoryId], references: [id])
+  blogCategoryId String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Faq {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AdminContact {
+  id      String @id @default(uuid())
+  phone   String @unique
+  email   String @unique
+  address String
+  mapUrl  String @db.Text
+}
+
+model Contact {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  subject   String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SocialMedia {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
