@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import prisma from '../../../db/db.config';
 import bcrypt from 'bcryptjs';
 import AppError from '../../errors/AppError';
@@ -6,9 +5,10 @@ import config from '../../config';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sendEmail } from '../../utils/sendEmail';
 import { createToke } from './auth.utils';
+import { AdminUser } from '@prisma/client';
 
-const loginUserFromDB = async (payload: User) => {
-  const userExists = await prisma.user.findUniqueOrThrow({
+const loginUserFromDB = async (payload: AdminUser) => {
+  const userExists = await prisma.adminUser.findUniqueOrThrow({
     where: {
       email: payload.email,
     },
@@ -27,7 +27,6 @@ const loginUserFromDB = async (payload: User) => {
     id: userExists.id,
     email: userExists.email,
     role: userExists.role,
-    status: userExists.status,
   };
 
   const accessToken = createToke(
@@ -42,7 +41,7 @@ const loginUserFromDB = async (payload: User) => {
 };
 
 const forgetPasswordIntoDB = async (email: string) => {
-  const findUser = await prisma.user.findUnique({
+  const findUser = await prisma.adminUser.findUnique({
     where: {
       email,
     },
@@ -70,7 +69,7 @@ const resetPasswordIntoDB = async (
   newPassword: string,
   token: string | undefined,
 ) => {
-  const findUser = await prisma.user.findUniqueOrThrow({
+  const findUser = await prisma.adminUser.findUniqueOrThrow({
     where: {
       id,
     },
@@ -88,7 +87,7 @@ const resetPasswordIntoDB = async (
 
   const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-  await prisma.user.update({
+  await prisma.adminUser.update({
     where: {
       id,
     },
@@ -105,7 +104,7 @@ const changePasswordIntDB = async (
   oldPassword: string,
   newPassword: string,
 ) => {
-  const findUser = await prisma.user.findUnique({
+  const findUser = await prisma.adminUser.findUnique({
     where: {
       email,
     },
@@ -123,7 +122,7 @@ const changePasswordIntDB = async (
 
   const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-  await prisma.user.update({
+  await prisma.adminUser.update({
     where: {
       email,
     },

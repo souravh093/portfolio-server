@@ -7,12 +7,13 @@ export default prisma;
 
 const adminUser = {
   id: 'b9173f97-4d26-4aab-b905-a48f83eea75e',
+  role: Role.ADMIN,
   email: config.adminEmail || '',
   password: config.adminPass || '',
 };
 
 export const seedAdminUser = async () => {
-  const isAdminUserExists = await prisma.user.findFirst({
+  const isAdminUserExists = await prisma.adminUser.findFirst({
     where: {
       email: config.adminEmail,
     },
