@@ -5,6 +5,7 @@ import { EducationRoutes } from '../modules/education/education.routes';
 import { ExperienceRoutes } from '../modules/experience/experience.routes';
 import { ServiceRoutes } from '../modules/service/service.routes';
 import { TechnologyCategoryRoutes } from '../modules/TechnologyCategory/TechnologyCategory.routes';
+import { TechnologyRoutes } from '../modules/Technology/Technology.routes';
 
 const router = Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/technologies-categories',
     route: TechnologyCategoryRoutes,
+  },
+  {
+    path: '/technologies',
+    route: TechnologyRoutes,
   },
 ];
 
