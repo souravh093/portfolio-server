@@ -107,7 +107,7 @@ model Project {
   description           String                  @db.Text
   videoUrl              String                  @db.Text
   projectCategory       ProjectCategory         @default(OTHER)
-  client                String
+  client                String?
   duration              String
   country               String
   createdAt             DateTime                @default(now())
