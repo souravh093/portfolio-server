@@ -12,6 +12,8 @@ import { BlogCategoryRoutes } from '../modules/BlogCategory/BlogCategory.routes'
 import { BlogRoutes } from '../modules/blog/blog.routes';
 import { FaqRoutes } from '../modules/faq/faq.routes';
 import { AdminContactRoutes } from '../modules/AdminContact/AdminContact.routes';
+import { ContactRoutes } from '../modules/contact/contact.routes';
+import { SocialMediaRoutes } from '../modules/socialMedia/socialMedia.routes';
 
 const router = Router();
 
@@ -67,6 +69,14 @@ const moduleRoutes = [
   {
     path: '/admin-contacts',
     route: AdminContactRoutes,
+  },
+  {
+    path: '/contacts',
+    route: ContactRoutes,
+  },
+  {
+    path: '/social-medias',
+    route: SocialMediaRoutes,
   },
 ];
 
