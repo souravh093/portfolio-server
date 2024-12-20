@@ -9,6 +9,9 @@ import { TechnologyRoutes } from '../modules/Technology/Technology.routes';
 import { ProjectRoutes } from '../modules/project/project.routes';
 import { ProjectReviewRoutes } from '../modules/ProjectReview/ProjectReview.routes';
 import { BlogCategoryRoutes } from '../modules/BlogCategory/BlogCategory.routes';
+import { BlogRoutes } from '../modules/blog/blog.routes';
+import { FaqRoutes } from '../modules/faq/faq.routes';
+import { AdminContactRoutes } from '../modules/AdminContact/AdminContact.routes';
 
 const router = Router();
 
@@ -52,6 +55,18 @@ const moduleRoutes = [
   {
     path: '/blog-categories',
     route: BlogCategoryRoutes,
+  },
+  {
+    path: '/blogs',
+    route: BlogRoutes,
+  },
+  {
+    path: '/faq',
+    route: FaqRoutes,
+  },
+  {
+    path: '/admin-contacts',
+    route: AdminContactRoutes,
   },
 ];
 
