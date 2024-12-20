@@ -142,7 +142,6 @@ model ProjectReview {
   project   Project  @relation(fields: [projectId], references: [id])
   name      String
   email     String
-  image     String   @db.Text
   review    String   @db.Text
   rating    Int      @default(0)
   createdAt DateTime @default(now())

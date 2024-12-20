@@ -7,6 +7,8 @@ import { ServiceRoutes } from '../modules/service/service.routes';
 import { TechnologyCategoryRoutes } from '../modules/TechnologyCategory/TechnologyCategory.routes';
 import { TechnologyRoutes } from '../modules/Technology/Technology.routes';
 import { ProjectRoutes } from '../modules/project/project.routes';
+import { ProjectReviewRoutes } from '../modules/ProjectReview/ProjectReview.routes';
+import { BlogCategoryRoutes } from '../modules/BlogCategory/BlogCategory.routes';
 
 const router = Router();
 
@@ -42,6 +44,14 @@ const moduleRoutes = [
   {
     path: '/projects',
     route: ProjectRoutes,
+  },
+  {
+    path: '/project-reviews',
+    route: ProjectReviewRoutes,
+  },
+  {
+    path: '/blog-categories',
+    route: BlogCategoryRoutes,
   },
 ];
 
