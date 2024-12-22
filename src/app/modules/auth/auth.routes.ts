@@ -13,6 +13,8 @@ router.post(
   AuthController.loginUser,
 );
 
+router.post('/refresh-token', AuthController.refreshToken);
+
 router.post(
   '/forget-password',
   validationRequest(AuthValidations.forgetPasswordValidation),

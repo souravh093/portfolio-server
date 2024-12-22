@@ -4,7 +4,7 @@ import AppError from '../../errors/AppError';
 import config from '../../config';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sendEmail } from '../../utils/sendEmail';
-import { createToke } from './auth.utils';
+import { createToke, verifyToken } from './auth.utils';
 import { AdminUser } from '@prisma/client';
 
 const loginUserFromDB = async (payload: AdminUser) => {
@@ -29,7 +29,9 @@ const loginUserFromDB = async (payload: AdminUser) => {
     role: userExists.role,
   };
 
-  const accessToken = createToke(
+  const accessToken = createToke(jwtPayload, config.jwtSecret as string, '1h');
+
+  const refreshToken = createToke(
     jwtPayload,
     config.jwtSecret as string,
     '365d',
@@ -37,6 +39,32 @@ const loginUserFromDB = async (payload: AdminUser) => {
 
   return {
     accessToken,
+    refreshToken,
+    userExists,
+  };
+};
+
+const refreshToken = async (token: string) => {
+  const decoded = verifyToken(token, config.jwtSecret as string);
+
+  const { email } = decoded;
+
+  const user = await prisma.adminUser.findUniqueOrThrow({
+    where: {
+      email,
+    },
+  });
+
+  const jwtPayload = {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+  };
+
+  const accessToken = createToke(jwtPayload, config.jwtSecret as string, '1h');
+
+  return {
+    accessToken
   };
 };
 
@@ -136,6 +164,7 @@ const changePasswordIntDB = async (
 
 export const AuthServices = {
   loginUserFromDB,
+  refreshToken,
   forgetPasswordIntoDB,
   resetPasswordIntoDB,
   changePasswordIntDB,

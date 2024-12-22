@@ -12,16 +12,28 @@ type TResponse<T> = {
   message?: string;
   meta?: TMeta;
   data?: T;
+  token?: {
+    accessToken: string;
+    refreshToken: string;
+  };
 };
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {
-  return res.status(data.statusCode).json({
-    statusCode: data.statusCode,
+  const responseData: TResponse<T> = {
     success: data.success,
+    statusCode: data.statusCode,
     message: data.message,
-    meta: data?.meta || null,
+    meta: data.meta,
     data: data.data,
-  });
+  };
+
+  if (data.token) {
+    responseData.token = {
+      accessToken: data.token.accessToken,
+      refreshToken: data.token.refreshToken,
+    };
+  }
+  res.status(data.statusCode).json(responseData);
 };
 
 export default sendResponse;
