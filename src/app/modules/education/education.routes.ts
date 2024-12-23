@@ -7,13 +7,14 @@ import { EducationController } from './education.controller';
 
 const router = Router();
 
-router.get('/', EducationController.getEducation);
 router.post(
   '/',
   auth(Role.ADMIN),
   validationRequest(EducationValidations.createValidationSchema),
   EducationController.createEducation,
 );
+router.get('/', EducationController.getEducation);
+router.get('/:id', EducationController.getEducationById);
 router.put(
   '/:id',
   auth(Role.ADMIN),

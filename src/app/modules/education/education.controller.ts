@@ -24,6 +24,17 @@ const getEducation = catchAsync(async (req, res) => {
   });
 });
 
+const getEducationById = catchAsync(async (req, res) => {
+  const result = await EducationServices.getEducationByIdFromDB(req.params.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Education fetched successfully',
+    data: result,
+  });
+});
+
 const updateEducation = catchAsync(async (req, res) => {
   const result = await EducationServices.updateEducationIntoDB(
     req.params.id,
@@ -52,6 +63,7 @@ const deleteEducation = catchAsync(async (req, res) => {
 export const EducationController = {
   createEducation,
   getEducation,
+  getEducationById,
   updateEducation,
   deleteEducation,
 };

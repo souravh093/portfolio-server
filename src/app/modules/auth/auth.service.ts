@@ -29,7 +29,7 @@ const loginUserFromDB = async (payload: AdminUser) => {
     role: userExists.role,
   };
 
-  const accessToken = createToke(jwtPayload, config.jwtSecret as string, '1h');
+  const accessToken = createToke(jwtPayload, config.jwtSecret as string, '365d');
 
   const refreshToken = createToke(
     jwtPayload,

@@ -21,7 +21,7 @@ const auth = (...requiredRoles: string[]) => {
 
     const { role, email } = decoded;
 
-    await prisma.user.findFirstOrThrow({
+    await prisma.adminUser.findFirstOrThrow({
       where: {
         email,
       },

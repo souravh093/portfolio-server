@@ -15,6 +15,16 @@ const getEducationFromDB = async () => {
   return result;
 };
 
+const getEducationByIdFromDB = async (id: string) => {
+  const result = await prisma.education.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return result;
+}
+
 const updateEducationIntoDB = async (id: string, payload: Education) => {
   await prisma.education.findUniqueOrThrow({
     where: {
@@ -51,6 +61,7 @@ const deleteEducationFromDB = async (id: string) => {
 export const EducationServices = {
   createEducationIntoDB,
   getEducationFromDB,
+  getEducationByIdFromDB,
   updateEducationIntoDB,
   deleteEducationFromDB,
 };
