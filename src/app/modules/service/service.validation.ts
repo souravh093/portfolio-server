@@ -15,18 +15,6 @@ const createServiceValidationSchema = z.object({
     description: z.string({
       required_error: 'Service description is required',
     }),
-    videoUrl: z.string({ required_error: 'Service video URL is required' }),
-    serviceGallery: z.array(
-      z.object({
-        image: z
-          .string({
-            required_error: 'Service gallery image is required',
-          })
-          .url({
-            message: 'Invalid URL',
-          }),
-      }),
-    ),
   }),
 });
 
@@ -35,12 +23,6 @@ const updateServiceValidationSchema = z.object({
     name: z.string().optional(),
     logo: z.string().url({ message: 'Invalid URL' }).optional(),
     description: z.string().optional(),
-    videoUrl: z.string().optional(),
-    serviceGallery: z.array(
-      z.object({
-        image: z.string().url({ message: 'Invalid URL' }).optional(),
-      }),
-    ),
   }),
 });
 

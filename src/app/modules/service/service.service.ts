@@ -1,4 +1,3 @@
-import { ServiceGallery } from '@prisma/client';
 import prisma from '../../../db/db.config';
 
 const createServiceIntoDB = async (payload: any) => {
@@ -7,14 +6,6 @@ const createServiceIntoDB = async (payload: any) => {
       name: payload.name,
       logo: payload.logo,
       description: payload.description,
-      videoUrl: payload.videoUrl,
-      serviceGallery: {
-        create: payload.serviceGallery.map(
-          (serviceGallery: ServiceGallery) => ({
-            image: serviceGallery.image,
-          }),
-        ),
-      },
     },
   });
 
@@ -22,11 +13,7 @@ const createServiceIntoDB = async (payload: any) => {
 };
 
 const getServicesFromDB = async () => {
-  const result = await prisma.service.findMany({
-    include: {
-      serviceGallery: true,
-    },
-  });
+  const result = await prisma.service.findMany();
 
   return result;
 };
@@ -35,9 +22,6 @@ const getServiceByIdFromDB = async (id: string) => {
   const result = await prisma.service.findUnique({
     where: {
       id,
-    },
-    include: {
-      serviceGallery: true,
     },
   });
 
@@ -53,15 +37,6 @@ const updateServiceIntoDB = async (id: string, payload: any) => {
       name: payload.name,
       logo: payload.logo,
       description: payload.description,
-      videoUrl: payload.videoUrl,
-      serviceGallery: {
-        deleteMany: {},
-        create: payload.serviceGallery.map(
-          (serviceGallery: ServiceGallery) => ({
-            image: serviceGallery.image,
-          }),
-        ),
-      },
     },
   });
 
