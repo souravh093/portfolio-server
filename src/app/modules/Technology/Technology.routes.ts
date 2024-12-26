@@ -8,7 +8,6 @@ import { TechnologyValidationSchema } from './Technology.validation';
 const router = Router();
 
 router.get('/', TechnologyController.getTechnologies);
-router.get('/category', TechnologyController.getTechnologiesByCategory);
 router.get('/:id', TechnologyController.getTechnologyById);
 router.post(
   '/',

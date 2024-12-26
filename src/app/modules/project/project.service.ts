@@ -1,4 +1,4 @@
-import { ProjectGallery, ProjectUsedTechnology } from '@prisma/client';
+import { ProjectUsedTechnology } from '@prisma/client';
 import prisma from '../../../db/db.config';
 
 const createProjectIntoDB = async (payload: any) => {
@@ -6,16 +6,12 @@ const createProjectIntoDB = async (payload: any) => {
     data: {
       name: payload.name,
       description: payload.description,
-      videoUrl: payload.videoUrl,
       projectCategory: payload.projectCategory,
-      client: payload.client,
       duration: payload.duration,
-      country: payload.country,
-      projectGallery: {
-        create: payload.projectGallery.map((gallery: ProjectGallery) => ({
-          image: gallery.image,
-        })),
-      },
+      githubClientUrl: payload.githubClientUrl,
+      githubServerUrl: payload.githubServerUrl,
+      image: payload.image,
+      projectUrl: payload.projectUrl,
       projectUsedTechnology: {
         create: payload.projectUsedTechnology.map(
           (technology: ProjectUsedTechnology) => ({
@@ -32,8 +28,11 @@ const createProjectIntoDB = async (payload: any) => {
 const getProjectsFromDB = async () => {
   const result = await prisma.project.findMany({
     include: {
-      projectGallery: true,
-      projectUsedTechnology: true,
+      projectUsedTechnology: {
+        include: {
+          technology: true,
+        }
+      },
     },
   });
 
@@ -46,8 +45,11 @@ const getProjectByIdFromDB = async (id: string) => {
       id,
     },
     include: {
-      projectGallery: true,
-      projectUsedTechnology: true,
+      projectUsedTechnology: {
+        include: {
+          technology: true,
+        }
+      },
     },
   });
 
@@ -62,17 +64,12 @@ const updateProjectIntoDB = async (id: string, payload: any) => {
     data: {
       name: payload.name,
       description: payload.description,
-      videoUrl: payload.videoUrl,
       projectCategory: payload.projectCategory,
-      client: payload.client,
       duration: payload.duration,
-      country: payload.country,
-      projectGallery: {
-        deleteMany: {},
-        create: payload.projectGallery.map((gallery: ProjectGallery) => ({
-          image: gallery.image,
-        })),
-      },
+      githubClientUrl: payload.githubClientUrl,
+      githubServerUrl: payload.githubServerUrl,
+      image: payload.image,
+      projectUrl: payload.projectUrl,
       projectUsedTechnology: {
         deleteMany: {},
         create: payload.projectUsedTechnology.map(

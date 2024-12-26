@@ -7,7 +7,7 @@ const createBlogValidationSchema = z.object({
     image: z
       .string({ required_error: 'Image is required' })
       .url({ message: 'Image must be a valid URL' }),
-    blogCategoryId: z.string({ required_error: 'Blog Category is required' }),
+    category: z.string({ required_error: 'Category is required' }),
   }),
 });
 

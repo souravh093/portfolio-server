@@ -54,29 +54,24 @@ model Experience {
 }
 
 model Service {
-  id             String           @id @default(uuid())
-  name           String           @unique
-  logo           String           @db.Text
-  description    String           @db.Text
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id          String   @id @default(uuid())
+  name        String   @unique
+  logo        String   @db.Text
+  description String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-
-model TechnologyCategory {
-  id         String       @id @default(uuid())
-  name       String       @unique
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  Technology Technology[]
+enum TechnologyCategory {
+  TECHNICAL
+  SOFT_SKILL
 }
 
 model Technology {
   id                    String                  @id @default(uuid())
   name                  String                  @unique
   logo                  String                  @db.Text
-  technologyCategory    TechnologyCategory      @relation(fields: [technologyCategoryId], references: [id])
-  technologyCategoryId  String
+  category              TechnologyCategory      @default(TECHNICAL)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   projectUsedTechnology ProjectUsedTechnology[]
@@ -95,33 +90,24 @@ model Project {
   id                    String                  @id @default(uuid())
   name                  String
   description           String                  @db.Text
-  videoUrl              String                  @db.Text
+  projectUrl            String
+  githubClientUrl       String                  @db.Text
+  githubServerUrl       String                  @db.Text
   projectCategory       ProjectCategory         @default(OTHER)
-  client                String?
   duration              String
-  country               String
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
-  projectGallery        ProjectGallery[]
+  image                 String                  @db.Text
   projectUsedTechnology ProjectUsedTechnology[]
   projectReview         ProjectReview[]
-}
-
-model ProjectGallery {
-  id        String   @id @default(uuid())
-  projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
-  image     String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model ProjectUsedTechnology {
   id           String     @id @default(uuid())
   projectId    String
   technologyId String
-  project      Project    @relation(fields: [projectId], references: [id])
-  technology   Technology @relation(fields: [technologyId], references: [id])
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }
@@ -129,7 +115,7 @@ model ProjectUsedTechnology {
 model ProjectReview {
   id        String   @id @default(uuid())
   projectId String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   name      String
   email     String
   review    String   @db.Text
@@ -138,23 +124,21 @@ model ProjectReview {
   updatedAt DateTime @updatedAt
 }
 
-model BlogCategory {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  blog      Blog[]
+enum BlogCategory {
+  WEB_DEVELOPMENT
+  MOBILE_DEVELOPMENT
+  DESKTOP_DEVELOPMENT
+  OTHER
 }
 
 model Blog {
-  id             String       @id @default(uuid())
-  title          String
-  description    String       @db.Text
-  image          String       @db.Text
-  blogCategory   BlogCategory @relation(fields: [blogCategoryId], references: [id])
-  blogCategoryId String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id          String       @id @default(uuid())
+  title       String
+  description String       @db.Text
+  image       String       @db.Text
+  category    BlogCategory @default(OTHER)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Faq {

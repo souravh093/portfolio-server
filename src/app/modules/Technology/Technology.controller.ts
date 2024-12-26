@@ -24,17 +24,6 @@ const getTechnologies = catchAsync(async (req, res) => {
   });
 });
 
-const getTechnologiesByCategory = catchAsync(async (req, res) => {
-  const result = await TechnologyServices.getTechnologiesByCategories();
-
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Technologies fetched successfully',
-    data: result,
-  });
-});
-
 const getTechnologyById = catchAsync(async (req, res) => {
   const result = await TechnologyServices.getTechnologyByIdFromDB(
     req.params.id,
@@ -75,7 +64,6 @@ const deleteTechnologyById = catchAsync(async (req, res) => {
 export const TechnologyController = {
   createTechnology,
   getTechnologies,
-  getTechnologiesByCategory,
   getTechnologyById,
   updateTechnologyById,
   deleteTechnologyById,

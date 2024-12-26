@@ -15,21 +15,6 @@ const getTechnologiesFromDB = async () => {
   return result;
 };
 
-const getTechnologiesByCategories = async () => {
-  const technologies = await prisma.technology.findMany();
-  const groupedTechnologies = technologies.reduce(
-    (acc: { [key: string]: Technology[] }, technology) => {
-      const { technologyCategoryId } = technology;
-      if (!acc[technologyCategoryId]) {
-        acc[technologyCategoryId] = [];
-      }
-      acc[technologyCategoryId].push(technology);
-      return acc;
-    },
-    {},
-  );
-  return groupedTechnologies;
-};
 
 const getTechnologyByIdFromDB = async (id: string) => {
   const result = await prisma.technology.findUnique({
@@ -68,5 +53,4 @@ export const TechnologyServices = {
   getTechnologyByIdFromDB,
   updateTechnologyByIdInDB,
   deleteTechnologyByIdFromDB,
-  getTechnologiesByCategories,
 };
