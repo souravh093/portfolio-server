@@ -6,11 +6,9 @@ const about_routes_1 = require("../modules/about/about.routes");
 const education_routes_1 = require("../modules/education/education.routes");
 const experience_routes_1 = require("../modules/experience/experience.routes");
 const service_routes_1 = require("../modules/service/service.routes");
-const TechnologyCategory_routes_1 = require("../modules/TechnologyCategory/TechnologyCategory.routes");
 const Technology_routes_1 = require("../modules/Technology/Technology.routes");
 const project_routes_1 = require("../modules/project/project.routes");
 const ProjectReview_routes_1 = require("../modules/ProjectReview/ProjectReview.routes");
-const BlogCategory_routes_1 = require("../modules/BlogCategory/BlogCategory.routes");
 const blog_routes_1 = require("../modules/blog/blog.routes");
 const faq_routes_1 = require("../modules/faq/faq.routes");
 const AdminContact_routes_1 = require("../modules/AdminContact/AdminContact.routes");
@@ -39,10 +37,6 @@ const moduleRoutes = [
         route: service_routes_1.ServiceRoutes,
     },
     {
-        path: '/technologies-categories',
-        route: TechnologyCategory_routes_1.TechnologyCategoryRoutes,
-    },
-    {
         path: '/technologies',
         route: Technology_routes_1.TechnologyRoutes,
     },
@@ -53,10 +47,6 @@ const moduleRoutes = [
     {
         path: '/project-reviews',
         route: ProjectReview_routes_1.ProjectReviewRoutes,
-    },
-    {
-        path: '/blog-categories',
-        route: BlogCategory_routes_1.BlogCategoryRoutes,
     },
     {
         path: '/blogs',

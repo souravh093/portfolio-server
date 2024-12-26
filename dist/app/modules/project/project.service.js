@@ -19,16 +19,12 @@ const createProjectIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
         data: {
             name: payload.name,
             description: payload.description,
-            videoUrl: payload.videoUrl,
             projectCategory: payload.projectCategory,
-            client: payload.client,
             duration: payload.duration,
-            country: payload.country,
-            projectGallery: {
-                create: payload.projectGallery.map((gallery) => ({
-                    image: gallery.image,
-                })),
-            },
+            githubClientUrl: payload.githubClientUrl,
+            githubServerUrl: payload.githubServerUrl,
+            image: payload.image,
+            projectUrl: payload.projectUrl,
             projectUsedTechnology: {
                 create: payload.projectUsedTechnology.map((technology) => ({
                     technologyId: technology.technologyId,
@@ -41,8 +37,11 @@ const createProjectIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
 const getProjectsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield db_config_1.default.project.findMany({
         include: {
-            projectGallery: true,
-            projectUsedTechnology: true,
+            projectUsedTechnology: {
+                include: {
+                    technology: true,
+                }
+            },
         },
     });
     return result;
@@ -53,8 +52,11 @@ const getProjectByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function*
             id,
         },
         include: {
-            projectGallery: true,
-            projectUsedTechnology: true,
+            projectUsedTechnology: {
+                include: {
+                    technology: true,
+                }
+            },
         },
     });
     return result;
@@ -67,17 +69,12 @@ const updateProjectIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
         data: {
             name: payload.name,
             description: payload.description,
-            videoUrl: payload.videoUrl,
             projectCategory: payload.projectCategory,
-            client: payload.client,
             duration: payload.duration,
-            country: payload.country,
-            projectGallery: {
-                deleteMany: {},
-                create: payload.projectGallery.map((gallery) => ({
-                    image: gallery.image,
-                })),
-            },
+            githubClientUrl: payload.githubClientUrl,
+            githubServerUrl: payload.githubServerUrl,
+            image: payload.image,
+            projectUrl: payload.projectUrl,
             projectUsedTechnology: {
                 deleteMany: {},
                 create: payload.projectUsedTechnology.map((technology) => ({

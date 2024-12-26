@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendEmail = void 0;
+exports.sendEmailToAdmin = exports.sendEmail = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const sendEmail = (link, email) => __awaiter(void 0, void 0, void 0, function* () {
     const transporter = nodemailer_1.default.createTransport({
@@ -34,3 +34,23 @@ const sendEmail = (link, email) => __awaiter(void 0, void 0, void 0, function* (
     });
 });
 exports.sendEmail = sendEmail;
+const sendEmailToAdmin = (email, name, message) => __awaiter(void 0, void 0, void 0, function* () {
+    const transporter = nodemailer_1.default.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'souravofficial.web@gmail.com',
+            pass: 'nvkk qpux gzte nmjp',
+        },
+    });
+    // send mail
+    yield transporter.sendMail({
+        from: `${email}`,
+        to: 'souravofficial.web@gmail.com',
+        subject: `Contact me from my website by ${name}`,
+        text: message,
+        html: `<p>${message}</p>`,
+    });
+});
+exports.sendEmailToAdmin = sendEmailToAdmin;

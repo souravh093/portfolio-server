@@ -14,10 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContactService = void 0;
 const db_config_1 = __importDefault(require("../../../db/db.config"));
+const sendEmail_1 = require("../../utils/sendEmail");
 const createContact = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield db_config_1.default.contact.create({
         data: payload,
     });
+    // send email to admin
+    yield (0, sendEmail_1.sendEmailToAdmin)(payload.email, payload.name, payload.message);
     return result;
 });
 const getContact = () => __awaiter(void 0, void 0, void 0, function* () {

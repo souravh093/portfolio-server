@@ -9,7 +9,7 @@ const createBlogValidationSchema = zod_1.z.object({
         image: zod_1.z
             .string({ required_error: 'Image is required' })
             .url({ message: 'Image must be a valid URL' }),
-        blogCategoryId: zod_1.z.string({ required_error: 'Blog Category is required' }),
+        category: zod_1.z.string({ required_error: 'Category is required' }),
     }),
 });
 const updateBlogValidationSchema = zod_1.z.object({

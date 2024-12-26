@@ -1,10 +1,14 @@
 import { Contact } from '@prisma/client';
 import prisma from '../../../db/db.config';
+import { sendEmailToAdmin } from '../../utils/sendEmail';
 
 const createContact = async (payload: Contact) => {
   const result = await prisma.contact.create({
     data: payload,
   });
+
+  // send email to admin
+  await sendEmailToAdmin(payload.email, payload.name, payload.message);
 
   return result;
 };

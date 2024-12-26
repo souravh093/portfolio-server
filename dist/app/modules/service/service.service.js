@@ -20,31 +20,18 @@ const createServiceIntoDB = (payload) => __awaiter(void 0, void 0, void 0, funct
             name: payload.name,
             logo: payload.logo,
             description: payload.description,
-            videoUrl: payload.videoUrl,
-            serviceGallery: {
-                create: payload.serviceGallery.map((serviceGallery) => ({
-                    image: serviceGallery.image,
-                })),
-            },
         },
     });
     return result;
 });
 const getServicesFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield db_config_1.default.service.findMany({
-        include: {
-            serviceGallery: true,
-        },
-    });
+    const result = yield db_config_1.default.service.findMany();
     return result;
 });
 const getServiceByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield db_config_1.default.service.findUnique({
         where: {
             id,
-        },
-        include: {
-            serviceGallery: true,
         },
     });
     return result;
@@ -58,13 +45,6 @@ const updateServiceIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
             name: payload.name,
             logo: payload.logo,
             description: payload.description,
-            videoUrl: payload.videoUrl,
-            serviceGallery: {
-                deleteMany: {},
-                create: payload.serviceGallery.map((serviceGallery) => ({
-                    image: serviceGallery.image,
-                })),
-            },
         },
     });
     return result;

@@ -34,15 +34,6 @@ const getTechnologies = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         data: result,
     });
 }));
-const getTechnologiesByCategory = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Technology_service_1.TechnologyServices.getTechnologiesByCategories();
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Technologies fetched successfully',
-        data: result,
-    });
-}));
 const getTechnologyById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Technology_service_1.TechnologyServices.getTechnologyByIdFromDB(req.params.id);
     (0, sendResponse_1.default)(res, {
@@ -72,7 +63,6 @@ const deleteTechnologyById = (0, catchAsync_1.default)((req, res) => __awaiter(v
 exports.TechnologyController = {
     createTechnology,
     getTechnologies,
-    getTechnologiesByCategory,
     getTechnologyById,
     updateTechnologyById,
     deleteTechnologyById,

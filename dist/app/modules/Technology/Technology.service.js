@@ -24,18 +24,6 @@ const getTechnologiesFromDB = () => __awaiter(void 0, void 0, void 0, function* 
     const result = yield db_config_1.default.technology.findMany();
     return result;
 });
-const getTechnologiesByCategories = () => __awaiter(void 0, void 0, void 0, function* () {
-    const technologies = yield db_config_1.default.technology.findMany();
-    const groupedTechnologies = technologies.reduce((acc, technology) => {
-        const { technologyCategoryId } = technology;
-        if (!acc[technologyCategoryId]) {
-            acc[technologyCategoryId] = [];
-        }
-        acc[technologyCategoryId].push(technology);
-        return acc;
-    }, {});
-    return groupedTechnologies;
-});
 const getTechnologyByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield db_config_1.default.technology.findUnique({
         where: {
@@ -67,5 +55,4 @@ exports.TechnologyServices = {
     getTechnologyByIdFromDB,
     updateTechnologyByIdInDB,
     deleteTechnologyByIdFromDB,
-    getTechnologiesByCategories,
 };
